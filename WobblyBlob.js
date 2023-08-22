@@ -4,7 +4,7 @@ class WobblyBlob {
     level = new Tone.Signal(0);
 
     vol = new Tone.Volume(-80).toDestination();
-    osc = new Tone.Oscillator(200, "triangle").connect(this.vol);
+    osc = new Tone.FMSynth().connect(this.vol);
 
     numWaves = 20;
 
@@ -23,14 +23,14 @@ class WobblyBlob {
     drawWobbles = function () {
         translate(mouseX, mouseY);
         for (let i = 0; i < this.numWaves; i++) {
-            rotate(TWO_PI / randomRange(2, 2));
-            let amount = map(this.level.value, 0, 1, 0.65, 1);
+            rotate(TWO_PI / randomRange(5, 3));
+            let amount = map(this.level.value, 0, 1, 0.65, 0.85);
+            amount += constrain(map(mouseX, 0, width, 0, 0.15), 0, 0.15);
             let radX = this.r * randomRange(amount, 0.35);
             let radY = this.r * randomRange(0.2, 0.5);
             if (floor(random(50)) === 1) {
                 radX =
-                    this.r *
-                    randomRange(map(this.level.value, 0, 1, 1, 1.35), 0.35);
+                    this.r * randomRange(map(amount, 0.85, 1, 1, 1.35), 0.35);
             }
             ellipse(0, 0, radX, radY);
         }
@@ -39,12 +39,20 @@ class WobblyBlob {
     startSound = function () {
         if (!this.soundOn) {
             this.level.rampTo(1, 0.1);
-            this.osc.start();
+            this.osc.triggerAttack("220");
             this.vol.volume.rampTo(-24, 0.01);
             this.soundOn = true;
         }
         this.osc.frequency.rampTo(
             constrain(map(mouseY, height, 0, 200, 550), 200, 550),
+            0.1
+        );
+        this.osc.harmonicity.rampTo(
+            constrain(map(mouseY, height, 0, 0.2, 2.0), 0.2, 2.0),
+            0.1
+        );
+        this.osc.modulationIndex.rampTo(
+            constrain(map(mouseX, 0, width, 0, 7.0), 0, 7.0),
             0.1
         );
     };
