@@ -15,7 +15,11 @@ function setup() {
 }
 
 function draw() {
-    background(bgColor);
+    let col = bgColor;
+    if (mouseIsPressed) {
+        col.setAlpha(80);
+    }
+    background(col);
     fill(blobColor);
     wobblyBlob.display();
 }
