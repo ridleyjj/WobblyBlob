@@ -40,7 +40,7 @@ class WobblyBlob {
         if (!this.soundOn) {
             this.level.rampTo(1, 0.1);
             this.osc.start();
-            this.vol.volume.rampTo(-6, 0.01);
+            this.vol.volume.rampTo(-24, 0.01);
             this.soundOn = true;
         }
         this.osc.frequency.rampTo(
