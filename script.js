@@ -7,7 +7,12 @@ let blobColor;
 let initialised = false;
 
 function setup() {
-    createCanvas(700, 700);
+    if (window.innerWidth > 700) {
+        createCanvas(700, 700);
+    } else {
+        createCanvas(window.innerWidth * 0.95, window.innerHeight * 0.95);
+    }
+
     noStroke();
     bgColor = color(210, 220, 220);
     blobColor = color(230, 120, 120);
@@ -18,6 +23,8 @@ function draw() {
     let col = bgColor;
     if (mouseIsPressed) {
         col.setAlpha(80);
+    } else {
+        col.setAlpha(255);
     }
     background(col);
     fill(blobColor);

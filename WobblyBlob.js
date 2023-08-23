@@ -11,11 +11,13 @@ class WobblyBlob {
     soundOn = false;
 
     display = function () {
-        ellipse(mouseX, mouseY, this.r, this.r);
         if (mouseIsPressed) {
+            ellipse(mouseX, mouseY, this.r, this.r);
             this.drawWobbles();
             this.startSound();
         } else {
+            let radius = this.r * 0.95;
+            ellipse(mouseX, mouseY, radius, radius);
             this.stopSound();
         }
     };
