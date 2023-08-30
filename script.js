@@ -20,6 +20,19 @@ function setup() {
 }
 
 function draw() {
+    if (initialised) {
+        activeDraw();
+    } else {
+        background(bgColor);
+        fill(blobColor);
+        textSize(24);
+        textAlign(CENTER);
+        textFont("Arial");
+        text("click to begin", width / 2, height / 2);
+    }
+}
+
+function activeDraw() {
     let col = bgColor;
     if (mouseIsPressed) {
         col.setAlpha(80);
@@ -33,6 +46,6 @@ function draw() {
 
 document.addEventListener("click", () => {
     if (!initialised) {
-        Tone.start();
+        Tone.start().then(() => (initialised = true));
     }
 });
