@@ -12,11 +12,7 @@ class WobblyBlob {
 
     display = function () {
         if (mouseIsPressed) {
-            if (touches.length >= 1) {
-                this.drawActiveBlob(touches[0].x, touches[0].y);
-            } else {
-                this.drawActiveBlob(mouseX, mouseY);
-            }
+            this.drawActiveBlob(mouseX, mouseY);
         } else {
             let radius = this.r * 0.95;
             ellipse(mouseX, mouseY, radius, radius);
