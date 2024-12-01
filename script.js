@@ -27,8 +27,8 @@ function draw() {
         fill(blobColor);
         textSize(24);
         textAlign(CENTER);
-        textFont("Arial");
-        text("click to begin", width / 2, height / 2);
+        textFont('Arial');
+        text('click to begin', width / 2, height / 2);
     }
 }
 
@@ -44,7 +44,7 @@ function activeDraw() {
     wobblyBlob.display();
 }
 
-document.addEventListener("click", () => {
+document.addEventListener('click', () => {
     if (!initialised) {
         Tone.start().then(() => (initialised = true));
     }

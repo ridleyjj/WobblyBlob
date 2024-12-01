@@ -12,9 +12,11 @@ class WobblyBlob {
 
     display = function () {
         if (mouseIsPressed) {
-            ellipse(mouseX, mouseY, this.r, this.r);
-            this.drawWobbles();
-            this.startSound();
+            if (touches.length >= 1) {
+                this.drawActiveBlob(touches[0].x, touches[0].y);
+            } else {
+                this.drawActiveBlob(mouseX, mouseY);
+            }
         } else {
             let radius = this.r * 0.95;
             ellipse(mouseX, mouseY, radius, radius);
@@ -22,12 +24,18 @@ class WobblyBlob {
         }
     };
 
-    drawWobbles = function () {
-        translate(mouseX, mouseY);
+    drawActiveBlob = function (x, y) {
+        ellipse(x, y, this.r, this.r);
+        this.drawWobbles(x, y);
+        this.startSound(x, y);
+    };
+
+    drawWobbles = function (x, y) {
+        translate(x, y);
         for (let i = 0; i < this.numWaves; i++) {
             rotate(TWO_PI / randomRange(5, 3));
             let amount = map(this.level.value, 0, 1, 0.65, 0.85);
-            amount += constrain(map(mouseX, 0, width, 0, 0.15), 0, 0.15);
+            amount += constrain(map(x, 0, width, 0, 0.15), 0, 0.15);
             let radX = this.r * randomRange(amount, 0.35);
             let radY = this.r * randomRange(0.2, 0.5);
             if (floor(random(50)) === 1) {
@@ -38,23 +46,23 @@ class WobblyBlob {
         }
     };
 
-    startSound = function () {
+    startSound = function (x, y) {
         if (!this.soundOn) {
             this.level.rampTo(1, 0.1);
-            this.osc.triggerAttack("220");
-            this.vol.volume.rampTo(-12, 0.01);
+            this.osc.triggerAttack('220');
+            this.vol.volume.rampTo(0, 0.01);
             this.soundOn = true;
         }
         this.osc.frequency.rampTo(
-            constrain(map(mouseY, height, 0, 200, 550), 200, 550),
+            constrain(map(y, height, 0, 200, 550), 200, 550),
             0.1
         );
         this.osc.harmonicity.rampTo(
-            constrain(map(mouseY, height, 0, 0.2, 2.0), 0.2, 2.0),
+            constrain(map(y, height, 0, 0.2, 2.0), 0.2, 2.0),
             0.1
         );
         this.osc.modulationIndex.rampTo(
-            constrain(map(mouseX, 0, width, 0, 7.0), 0, 7.0),
+            constrain(map(x, 0, width, 0, 7.0), 0, 7.0),
             0.1
         );
     };
