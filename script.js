@@ -14,9 +14,9 @@ function setup() {
     }
 
     noStroke();
-    bgColor = color(210, 220, 220);
-    blobColor = color(230, 120, 120);
-    wobblyBlob = new WobblyBlob();
+    bgColor = color(255, 255, 255);
+    blobColor = color(251, 146, 88);
+    wobblyBlob = new WobblyBlob(width, height);
 }
 
 function draw() {
@@ -28,7 +28,8 @@ function draw() {
         textSize(24);
         textAlign(CENTER);
         textFont('Arial');
-        text('click to begin', width / 2, height / 2);
+        text('click to begin', width / 2, height / 2 - 30);
+        wobblyBlob.drawPreview();
     }
 }
 

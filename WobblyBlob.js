@@ -1,5 +1,5 @@
 class WobblyBlob {
-    r = 120;
+    r = 40;
 
     level = new Tone.Signal(0);
 
@@ -10,14 +10,32 @@ class WobblyBlob {
 
     soundOn = false;
 
+    constructor(canvasWidth, canvasHeight) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.maxX = canvasWidth - this.r;
+        this.maxY = canvasHeight - this.r;
+    }
+
+    drawPreview = function () {
+        this.drawInactiveBlob(this.canvasWidth * 0.5, this.canvasHeight * 0.5);
+    };
+
     display = function () {
+        let xPos = constrain(mouseX, this.r, this.maxX);
+        let yPos = constrain(mouseY, this.r, this.maxY);
+
         if (mouseIsPressed) {
-            this.drawActiveBlob(mouseX, mouseY);
+            this.drawActiveBlob(xPos, yPos);
         } else {
-            let radius = this.r * 0.95;
-            ellipse(mouseX, mouseY, radius, radius);
-            this.stopSound();
+            this.drawInactiveBlob(xPos, yPos);
         }
+    };
+
+    drawInactiveBlob = function (x, y) {
+        let radius = this.r * 0.95;
+        ellipse(x, y, radius, radius);
+        this.stopSound();
     };
 
     drawActiveBlob = function (x, y) {
