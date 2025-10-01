@@ -7,7 +7,7 @@ let blobColor;
 let initialised = false;
 
 function setup() {
-    createCanvas(window.innerWidth * 0.95, window.innerHeight * 0.95);
+    createCanvas(window.innerWidth * 0.95, window.innerHeight * 0.9);
 
     noStroke();
     bgColor = color(255, 255, 255);
